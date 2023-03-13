@@ -18,6 +18,11 @@ echo ""
 REPO_NAME=$(gum input --placeholder "Public repository name on Github for your custom image repository.")
 gh repo create $REPO_NAME --source . --push --public 
 
+echo "Setting up git for changes..."
+GIT_USER=$(gh api /user | jq '.login' -r)
+git config user.name $GIT_USER
+git config user.email $GIT_USER@users.noreply.github.com
+
 echo "Enabling container signing..."
 echo "" | cosign generate-key-pair
 gh secret set SIGNING_SECRET < cosign.key
