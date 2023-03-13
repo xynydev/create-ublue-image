@@ -3,5 +3,5 @@
 Run this (requires podman):
 
 ```
-podman run -it localhost/ubluewizard-test
+podman run -v "$(pwd)":/host:z -it localhost/ubluewizard-test
 ```
