@@ -1,16 +1,16 @@
-name: build-bazzite-arch
+name: build-image-creation-wizard
 on:
   pull_request:
     branches:
       - main
   schedule:
-    - cron: '20 18 * * *'  # 8:20pm everyday
+    - cron: "20 18 * * *" # 8:20pm everyday
   push:
     branches:
       - main
 env:
-    IMAGE_NAME: bazzite-arch
-    IMAGE_REGISTRY: ghcr.io/${{ github.repository_owner }}
+  IMAGE_NAME: image-creation-wizard
+  IMAGE_REGISTRY: ghcr.io/${{ github.repository_owner }}
 
 jobs:
   push-ghcr:
@@ -26,7 +26,7 @@ jobs:
         include:
           - is_latest: true
             is_stable: true
-    steps: 
+    steps:
       # Checkout push-to-registry action GitHub repository
       - name: Checkout Push to Registry action
         uses: actions/checkout@v3
