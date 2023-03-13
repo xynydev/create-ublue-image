@@ -17,3 +17,9 @@ git remote rename origin upstream
 echo ""
 REPO_NAME=$(gum input --placeholder "Public repository name on Github for your custom image repository.")
 gh repo create $REPO_NAME --source . --push --public 
+
+echo "Enabling container signing..."
+echo "" | cosign generate-key-pair
+gh secret set SIGNING_SECRET < cosign.key
+git add cosign.pub && git commit -m "chore(automatic): add public key"
+git push
