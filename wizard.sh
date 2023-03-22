@@ -33,7 +33,8 @@ git config user.name $GIT_USER
 git config user.email $GIT_USER@users.noreply.github.com
 
 echo "Enabling container signing..."
-echo | cosign generate-key-pair
+gum format -- "**Please do not input a password when prompted,** instead just press enter. The container signing wont work in Github CI if you have an encrypted signing key."
+cosign generate-key-pair
 gh secret set SIGNING_SECRET -R $REPO_FULL_NAME < cosign.key
 git add cosign.pub && git commit -m "chore(automatic): add public key"
 git push
