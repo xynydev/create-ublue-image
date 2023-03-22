@@ -1,24 +1,27 @@
 #!/bin/sh
 trap "exit" INT HUP TERM ERR
 
-echo "--- Welcome to the uBlue image creation wizard! --- "
+gum format --  "# --- Welcome to the uBlue image creation wizard! --- "
 
 cd /host
 
-echo "To get started, please log in to Github. This is used to set up the repository, nothing will be deleted or modified, only added!"
+gum format -- "To get started, please log in to Github. This is used to set up the repository, **nothing will be deleted or modified, only added!** You can read the source code of this script in [the repo](link coming soon)."
+echo
 gh auth login -p https -w
 GIT_USER=$(gh api /user | jq '.login' -r)
 
-echo ""
-REPO_DIR=$(gum input --placeholder "Directory name for your custom image repository.")
+echo
+gum format -- "## Please input a name for the directory you want to clone your custom image repository to." "A directory with this name will be created inside your working directory."
+REPO_DIR=$(gum input --placeholder "ie. my-ublue")
 gh repo clone ublue-os/startingpoint $REPO_DIR
 
 cd $REPO_DIR
 git remote rm upstream
 git remote rename origin upstream
 
-echo ""
-REPO_NAME=$(gum input --placeholder "Public repository name on Github for your custom image repository.")
+echo
+gum format -- "## Please input a name for the public repository on Github for your custom image." "A repository with this name will be created using your github account."
+REPO_NAME=$(gum input --placeholder "ie. my-ublue, org-name/silverblue-for-cats")
 gh repo create $REPO_NAME --source . --push --public
 if [ $REPO_NAME == *"/"* ]; then
     REPO_FULL_NAME=$REPO_NAME
@@ -33,8 +36,12 @@ git config user.name $GIT_USER
 git config user.email $GIT_USER@users.noreply.github.com
 
 echo "Enabling container signing..."
+echo
 gum format -- "**Please do not input a password when prompted,** instead just press enter. The container signing wont work in Github CI if you have an encrypted signing key."
+echo
 cosign generate-key-pair
 gh secret set SIGNING_SECRET -R $REPO_FULL_NAME < cosign.key
 git add cosign.pub && git commit -m "chore(automatic): add public key"
 git push
+
+gum format -- "# All done!" "[Your new Github repository](https://github.com/$REPO_FULL_NAME/)"
