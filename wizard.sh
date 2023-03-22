@@ -1,4 +1,6 @@
 #!/bin/sh
+trap "exit" INT HUP TERM ERR
+
 echo "--- Welcome to the uBlue image creation wizard! --- "
 
 cd /host
