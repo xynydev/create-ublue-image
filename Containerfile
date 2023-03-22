@@ -1,4 +1,4 @@
-FROM alpine:3.17
+FROM alpine:edge
 
 COPY wizard.sh /usr/bin/wizard.sh
 
