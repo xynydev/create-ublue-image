@@ -12,6 +12,7 @@ GIT_USER=$(gh api /user | jq '.login' -r)
 
 echo
 gum format -- "## Please input a name for the directory you want to clone your custom image repository to." "A directory with this name will be created inside your working directory."
+echo
 REPO_DIR=$(gum input --placeholder "ie. my-ublue")
 gh repo clone ublue-os/startingpoint $REPO_DIR
 
@@ -21,6 +22,7 @@ git remote rename origin upstream
 
 echo
 gum format -- "## Please input a name for the public repository on Github for your custom image." "A repository with this name will be created using your github account."
+echo
 REPO_NAME=$(gum input --placeholder "ie. my-ublue, org-name/silverblue-for-cats")
 gh repo create $REPO_NAME --source . --push --public
 if [ $REPO_NAME == *"/"* ]; then
