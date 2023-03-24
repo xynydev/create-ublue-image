@@ -21,7 +21,7 @@ git remote rm upstream
 git remote rename origin upstream
 
 echo
-gum format -- "## Please input a name for the public repository on Github for your custom image." "A repository with this name will be created using your github account."
+gum format -- "## Please input a name for the public repository on Github for your custom image." "A repository and package with this name will be created using your github account."
 echo
 REPO_NAME=$(gum input --placeholder "ie. my-ublue, org-name/silverblue-for-cats")
 gh repo create $REPO_NAME --source . --push --public
