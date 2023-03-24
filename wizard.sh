@@ -42,6 +42,21 @@ echo
 cosign generate-key-pair
 gh secret set SIGNING_SECRET -R $REPO_FULL_NAME < cosign.key
 git add cosign.pub && git commit -m "chore(automatic): add public key"
+
+echo "Renaming your image from \"startingpoint\" to $REPO_NAME..."
+
+# Regex-replaces the relevant places in build.yml to rename the built container image
+sed -i "s/IMAGE_BASE_NAME: .*/IMAGE_BASE_NAME: $REPO_NAME/" ./.github/workflows/build.yml
+sed -i "s/image_name: \[.*\]/image_name: \[$REPO_NAME]/" ./.github/workflows/build.yml
+git add ./.github/workflows/build.yml
+git commit -m "chore(automatic): change image name"
+
+# The repo full name has to be escaped for use with sed and lowercased for GHCR compatibility
+ESCAPED_REPO_FULL_NAME=$(echo $REPO_FULL_NAME | sed "s;\/;\\\/;" | tr '[:upper:]' '[:lower:]')
+sed -i "s/ublue-os\/startingpoint/$ESCAPED_REPO_FULL_NAME/g" ./README.md
+git add README.md
+git commit -m "chore(automatic): update all repo/image links"
+
 git push
 
 gum format -- "# All done!" "[Your new Github repository](https://github.com/$REPO_FULL_NAME/)"
