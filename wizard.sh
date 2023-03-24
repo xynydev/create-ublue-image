@@ -65,4 +65,6 @@ git commit -m "chore(automatic): update main title"
 
 git push
 
-gum format -- "# All done!" "[Your new Github repository](https://github.com/$REPO_FULL_NAME/). A build has been kicked off and an image will be available soon. After that, a new image will be built nightly."
+gum format -- "# All done!" \
+"[Your new Github repository](https://github.com/$REPO_FULL_NAME/). A build has been kicked off and an image will be available soon. After that, a new image will be built nightly." \
+"If the build does not start automatically, you can go run it manually [here](https://github.com/$REPO_FULL_NAME/actions/workflows/build.yml)"
