@@ -61,4 +61,4 @@ git commit -m "chore(automatic): update all repo/image links"
 
 git push
 
-gum format -- "# All done!" "[Your new Github repository](https://github.com/$REPO_FULL_NAME/)"
+gum format -- "# All done!" "[Your new Github repository](https://github.com/$REPO_FULL_NAME/). A build has been kicked off and an image will be available soon. After that, a new image will be built nightly."
