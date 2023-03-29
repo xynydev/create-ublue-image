@@ -9,3 +9,9 @@ This is a small containerized tool to automatically create a functional Github r
 ```
 podman run -v "$(pwd)":/host:z -it ghcr.io/einohr/create-ublue-image
 ```
+
+## Can I trust you?
+
+This tool uses `github-cli` to authenticate to your account, which could be a security concern.
+You can read all of the code in `wizard.sh` (<100 loc) and see for yourself everything this tool does.
+You can also just set up the repository manually.
