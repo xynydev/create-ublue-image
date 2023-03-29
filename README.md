@@ -7,5 +7,5 @@ This is a small containerized tool to automatically create a functional Github r
 `create-ublue-image` should run on any computer with [Podman](https://podman.io/) installed. If you are already running an immutable Fedora variant, you shouldn't have to install anything.
 
 ```
-podman run -v "$(pwd)":/host:z -it localhost/ubluewizard-test
+podman run -v "$(pwd)":/host:z -it ghcr.io/einohr/create-ublue-image
 ```
