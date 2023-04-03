@@ -47,9 +47,8 @@ git add cosign.pub && git commit -m "chore(automatic): add public key"
 
 echo "Renaming your image from \"startingpoint\" to $REPO_NAME..."
 
-# Regex-replaces the relevant places in build.yml to rename the built container image
-sed -i "s/IMAGE_BASE_NAME: .*/IMAGE_BASE_NAME: $REPO_NAME/" ./.github/workflows/build.yml
-sed -i "s/image_name: \[.*\]/image_name: \[$REPO_NAME]/" ./.github/workflows/build.yml
+# Regex-replaces the image name in build.yml
+sed -i "s/IMAGE_NAME: .*/IMAGE_NAME: $REPO_NAME/" ./.github/workflows/build.yml
 git add ./.github/workflows/build.yml
 git commit -m "chore(automatic): change image name"
 
