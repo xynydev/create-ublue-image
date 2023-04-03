@@ -47,9 +47,9 @@ git add cosign.pub && git commit -m "chore(automatic): add public key"
 
 echo "Renaming your image from \"startingpoint\" to $REPO_NAME..."
 
-# Regex-replaces the image name in build.yml
-sed -i "s/IMAGE_NAME: .*/IMAGE_NAME: $REPO_NAME/" ./.github/workflows/build.yml
-git add ./.github/workflows/build.yml
+# Set the image name in recipe.yml
+yq -i ".name =  \"$REPO_NAME\"" recipe.yml
+git add ./recipe.yml
 git commit -m "chore(automatic): change image name"
 
 # The repo full name has to be escaped for use with sed and lowercased for GHCR compatibility
