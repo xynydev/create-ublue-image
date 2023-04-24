@@ -9,7 +9,7 @@ This is a small containerized tool to automatically create a functional Github r
 Run the following command in a directory that you have write access to, your repo will be created as a subdirectory. The script will ask you further questions.
 
 ```
-podman run -v "$(pwd)":/host -it ghcr.io/einohr/create-ublue-image
+podman run -v "$(pwd)":/host:z -it ghcr.io/einohr/create-ublue-image
 ```
 
 ## Can I trust you?
