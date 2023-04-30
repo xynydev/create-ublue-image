@@ -4,9 +4,7 @@ This is a small containerized tool to automatically create a functional Github r
 
 ## Running
 
-Some instructions also exist in the uBlue docs: https://ublue.it/making-your-own/#automatic-setup
-
-`create-ublue-image` should run on any computer with [Podman](https://podman.io/) installed. If you are already running an immutable Fedora variant, you shouldn't have to install anything.
+***create-ublue-image*** should run on any computer with [Podman](https://podman.io/) installed. If you are already running an immutable Fedora variant, you shouldn't have to install anything.
 
 Run the following command in a directory that you have write access to, your repo will be created as a subdirectory. The script will ask you further questions.
 
@@ -16,6 +14,17 @@ podman run -v "$(pwd)":/host:z -it ghcr.io/einohr/create-ublue-image
 
 This command runs the OCI container built in this repo using `podman` mounting your working directory `pwd` into the container under the path `/host`. `:z` makes it possible for multiple containers to use the volume at the same time, which is useful when running a Distrobox. If you run into issues with "relabeling" when running the command, you should try removing `:z` from the end of the mount command.  
 **It is not recommended to run the tool inside your home directory, but rather a subdirectory, as that can cause errors.** However, if the command tool starts in your home dir without any errors, it should probably function. You do not need to run the tool in an empty directory, it will create a new one with the name that you input.
+
+## Pull latest commits
+
+In order to update changes from the upstream repository, run:
+
+```
+git fetch upstream
+git merge upstream/main -m "chore: merging upstream changes"
+```
+
+Some instructions also exist in the uBlue docs: https://ublue.it/making-your-own/#automatic-setup
 
 ## Can I trust you?
 
