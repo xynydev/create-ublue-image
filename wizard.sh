@@ -25,13 +25,16 @@ gum format -- "## Please input a name for the public repository on Github for yo
 echo
 REPO_NAME=$(gum input --placeholder "ie. my-ublue, org-name/silverblue-for-cats")
 gh repo create $REPO_NAME --source . --push --public
-if [ $REPO_NAME == *"/"* ]; then
-    REPO_FULL_NAME=$REPO_NAME
-    gh repo set-default $REPO_FULL_NAME
-else
-    REPO_FULL_NAME=$GIT_USER/$REPO_NAME
-    gh repo set-default $REPO_FULL_NAME
-fi
+case "$REPO_NAME" in
+  */*)
+    REPO_FULL_NAME="$REPO_NAME"
+    gh repo set-default "$REPO_FULL_NAME"
+    ;;
+  *)
+    REPO_FULL_NAME="$GIT_USER"/"$REPO_NAME"
+    gh repo set-default "$REPO_FULL_NAME"
+    ;;
+esac
 
 echo "Setting up git for changes..."
 git config user.name $GIT_USER
