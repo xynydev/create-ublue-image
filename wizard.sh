@@ -7,7 +7,7 @@ cd /host
 
 gum format -- "To get started, please log in to Github. This is used to set up the repository, **nothing will be deleted or modified, only added!** You can read the source code of this script in [the repo](https://github.com/EinoHR/create-ublue-image/)."
 echo
-gh auth login -p https -w
+gh auth login -p https -w -s workflow
 GIT_USER=$(gh api /user | jq '.login' -r)
 
 echo
