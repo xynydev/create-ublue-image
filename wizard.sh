@@ -1,9 +1,9 @@
 #!/bin/sh
-trap "exit" INT HUP TERM ERR
+trap "exit" INT HUP TERM
 
 gum format --  "# --- Welcome to the uBlue image creation wizard! --- "
 
-cd /host
+cd /host || { echo "Expected /host mount to be present" ; exit 1; }
 
 gum format -- "To get started, please log in to Github. This is used to set up the repository, **nothing will be deleted or modified, only added!** You can read the source code of this script in [the repo](https://github.com/EinoHR/create-ublue-image/)."
 echo
@@ -14,9 +14,9 @@ echo
 gum format -- "## Please input a name for the directory you want to clone your custom image repository to." "A directory with this name will be created inside your working directory."
 echo
 REPO_DIR=$(gum input --placeholder "ie. my-ublue")
-gh repo clone ublue-os/startingpoint $REPO_DIR
+gh repo clone ublue-os/startingpoint "$REPO_DIR"
 
-cd $REPO_DIR
+cd "$REPO_DIR" || exit
 git remote rm upstream
 git remote rename origin upstream
 
@@ -24,7 +24,7 @@ echo
 gum format -- "## Please input a name for the public repository on Github for your custom image." "A repository and package with this name will be created using your github account."
 echo
 REPO_NAME=$(gum input --placeholder "ie. my-ublue, org-name/silverblue-for-cats")
-gh repo create $REPO_NAME --source . --push --public
+gh repo create "$REPO_NAME" --source . --push --public
 case "$REPO_NAME" in
   */*)
     REPO_FULL_NAME="$REPO_NAME"
@@ -37,15 +37,15 @@ case "$REPO_NAME" in
 esac
 
 echo "Setting up git for changes..."
-git config user.name $GIT_USER
-git config user.email $GIT_USER@users.noreply.github.com
+git config user.name "$GIT_USER"
+git config user.email "$GIT_USER"@users.noreply.github.com
 
 echo "Enabling container signing..."
 echo
 gum format -- "**Please do not input a password when prompted,** instead just press enter. The container signing wont work in Github CI if you have an encrypted signing key."
 echo
 cosign generate-key-pair
-gh secret set SIGNING_SECRET -R $REPO_FULL_NAME < cosign.key
+gh secret set SIGNING_SECRET -R "$REPO_FULL_NAME" < cosign.key
 git add cosign.pub && git commit -m "chore(automatic): add public key"
 
 echo "Renaming your image from \"startingpoint\" to $REPO_NAME..."
@@ -56,7 +56,7 @@ git add ./recipe.yml
 git commit -m "chore(automatic): change image name"
 
 # The repo full name has to be escaped for use with sed and lowercased for GHCR compatibility
-ESCAPED_REPO_FULL_NAME=$(echo $REPO_FULL_NAME | sed "s;\/;\\\/;" | tr '[:upper:]' '[:lower:]')
+ESCAPED_REPO_FULL_NAME=$(echo "$REPO_FULL_NAME" | sed "s;\/;\\\/;" | tr '[:upper:]' '[:lower:]')
 sed -i "s/ublue-os\/startingpoint/$ESCAPED_REPO_FULL_NAME/g" ./README.md
 git add README.md
 git commit -m "chore(automatic): update all repo/image links"
