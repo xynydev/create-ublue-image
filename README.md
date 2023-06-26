@@ -2,6 +2,8 @@
 
 This is a small containerized tool to automatically create a functional Github repository custom ostree native container image based on [ublue-os/startingpoint](https://github.com/ublue-os/startingpoint).
 
+I'm working on a web-based version at [ublue-os/images-website](https://github.com/ublue-os/images-website), but this one will also be maintained for the time being.
+
 ## Running
 
 ***create-ublue-image*** should run on any computer with [Podman](https://podman.io/) installed. If you are already running an immutable Fedora variant, you shouldn't have to install anything.
