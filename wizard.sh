@@ -55,7 +55,8 @@ git add cosign.pub && git commit -m "chore(automatic): add public key"
 echo "Renaming your image from \"startingpoint\" to $REPO_NAME..."
 
 # Set the image name in recipe.yml
-yq -i ".name =  \"$REPO_NAME\"" recipe.yml
+LOWERCASE_NAME=$(echo "$REPO_NAME" | tr '[:upper:]' '[:lower:]')
+yq -i ".name =  \"$LOWERCASE_NAME\"" recipe.yml
 git add ./recipe.yml
 git commit -m "chore(automatic): change image name"
 
