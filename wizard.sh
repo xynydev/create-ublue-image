@@ -40,6 +40,10 @@ echo "Setting up git for changes..."
 git config user.name "$GIT_USER"
 git config user.email "$GIT_USER"@users.noreply.github.com
 
+echo "Creating live branch..."
+git branch live
+git checkout live
+
 echo "Enabling container signing..."
 echo
 gum format -- "**Please do not input a password when prompted,** instead just press enter. The container signing wont work in Github CI if you have an encrypted signing key."
@@ -65,7 +69,11 @@ sed -i "s/^# .*/# $REPO_NAME/" ./README.md
 git add README.md
 git commit -m "chore(automatic): update main title"
 
-git push
+echo "Pushing new branch..."
+git push -u origin live
+
+echo "Setting live branch as default..."
+gh repo edit --default-branch live
 
 gum format -- "# All done!" \
 "[Your new Github repository](https://github.com/$REPO_FULL_NAME/). A build has been kicked off and an image will be available soon. After that, a new image will be built nightly." \
