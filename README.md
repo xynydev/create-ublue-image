@@ -11,7 +11,7 @@ I'm working on a web-based version at [ublue-os/images-website](https://github.c
 Run the following command in a directory that you have write access to, your repo will be created as a subdirectory. The script will ask you further questions.
 
 ```
-podman run -v "$(pwd)":/host:z -it ghcr.io/einohr/create-ublue-image
+podman run -v "$(pwd)":/host --security-opt label=disable -it ghcr.io/einohr/create-ublue-image
 ```
 **It is not recommended to run the tool inside your home directory, but rather a subdirectory, as that can cause errors.**
 
