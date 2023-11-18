@@ -11,14 +11,14 @@ I'm working on a web-based version at [ublue-os/images-website](https://github.c
 Run the following command in a directory that you have write access to, your repo will be created as a subdirectory. The script will ask you further questions.
 
 ```
-podman run -v "$(pwd)":/host --security-opt label=disable -it ghcr.io/xynydev/create-ublue-image
+podman run -v "$(pwd)":/host --security-opt label=disable -it --pull=newer ghcr.io/xynydev/create-ublue-image
 ```
 **It is not recommended to run the tool inside your home directory, but rather a subdirectory, as that can cause errors.**
 
-However, if the command tool starts in your home dir without any errors, it should probably function. 
+However, if the command tool starts in your home dir without any errors, it should probably function.
 You do not need to run the tool in an empty directory, it will create a new one with the name that you input.
 
-This command runs the OCI container built in this repo using `podman` mounting your working directory `pwd` into the container under the path `/host`. `:z` makes it possible for multiple containers to use the volume at the same time, which is useful when running a Distrobox. If you run into issues with "relabeling" when running the command, you should try removing `:z` from the end of the mount command.  
+This command runs the OCI container built in this repo using `podman` mounting your working directory `pwd` into the container under the path `/host`. `:z` makes it possible for multiple containers to use the volume at the same time, which is useful when running a Distrobox. If you run into issues with "relabeling" when running the command, you should try removing `:z` from the end of the mount command.
 
 ## Pull latest commits
 
