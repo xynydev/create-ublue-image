@@ -1,4 +1,8 @@
 #!/bin/sh
+
+README_PATH="./README.md"
+RECIPE_PATH="config/recipe.yml"
+
 trap "exit" INT HUP TERM
 
 gum format --  "# --- Welcome to the uBlue image creation wizard! --- "
@@ -56,18 +60,18 @@ echo "Renaming your image from \"startingpoint\" to $REPO_NAME..."
 
 # Set the image name in recipe.yml
 LOWERCASE_NAME=$(echo "$REPO_NAME" | tr '[:upper:]' '[:lower:]')
-yq -i ".name =  \"$LOWERCASE_NAME\"" recipe.yml
-git add ./recipe.yml
+yq -i ".name =  \"$LOWERCASE_NAME\"" "${RECIPE_PATH}"
+git add "${RECIPE_PATH}"
 git commit -m "chore(automatic): change image name"
 
 # The repo full name has to be escaped for use with sed and lowercased for GHCR compatibility
 ESCAPED_REPO_FULL_NAME=$(echo "$REPO_FULL_NAME" | sed "s;\/;\\\/;" | tr '[:upper:]' '[:lower:]')
-sed -i "s/ublue-os\/startingpoint/$ESCAPED_REPO_FULL_NAME/g" ./README.md
-git add README.md
+sed -i "s/ublue-os\/startingpoint/$ESCAPED_REPO_FULL_NAME/g" "${README_PATH}"
+git add "${README_PATH}"
 git commit -m "chore(automatic): update all repo/image links"
 
-sed -i "s/^# .*/# $REPO_NAME/" ./README.md
-git add README.md
+sed -i "s/^# .*/# $REPO_NAME/" "${README_PATH}"
+git add "${README_PATH}"
 git commit -m "chore(automatic): update main title"
 
 echo "Pushing new branch..."
