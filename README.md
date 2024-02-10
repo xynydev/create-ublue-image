@@ -1,6 +1,6 @@
 # create-ublue-image
 
-This is a small containerized tool to automatically create a functional Github repository custom ostree native container image based on [ublue-os/startingpoint](https://github.com/ublue-os/startingpoint).
+This is a small containerized tool to automatically create a functional Github repository custom ostree native container image based on [blue-build/template](https://github.com/blue-build/template).
 
 I'm working on a web-based version at [ublue-os/images-website](https://github.com/ublue-os/images-website), but this one will also be maintained for the time being.
 
