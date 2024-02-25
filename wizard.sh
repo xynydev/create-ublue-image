@@ -9,7 +9,7 @@ gum format --  "# --- Welcome to the uBlue image creation wizard! --- "
 
 cd /host || { echo "Expected /host mount to be present" ; exit 1; }
 
-gum format -- "To get started, please log in to Github. This is used to set up the repository, **nothing will be deleted or modified, only added!** You can read the source code of this script in [the repo](https://github.com/EinoHR/create-ublue-image/)."
+gum format -- "To get started, please log in to Github. This is used to set up the repository, **nothing will be deleted or modified, only added!** You can read the source code of this script in [the repo](https://github.com/xynydev/create-ublue-image/)."
 echo
 gh auth login -p https -w -s workflow
 GIT_USER=$(gh api /user | jq '.login' -r)
